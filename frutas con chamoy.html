@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Picadely - Frutas Frescas, Chamoy Artesanal y Antojos</title>
+
+ 
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            chamoy: {
+              50: '#fff1f2',
+              100: '#ffe4e6',
+              200: '#fecdd3',
+              500: '#f43f5e',
+              600: '#e11d48',
+              700: '#be123c',
+              800: '#9f1239',
+              900: '#881337',
+              950: '#4c0519',
+            },
+            mango: {
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+            },
+            tajin: {
+              500: '#ea580c',
+              600: '#c2410c',
+            }
+          },
+          fontFamily: {
+            display: ['Outfit', 'sans-serif'],
+            body: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+ 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <style>
+    .hero-pattern {
+      background: linear-gradient(rgba(76, 5, 25, 0.85), rgba(76, 5, 25, 0.92)), url('https://images.unsplash.com/photo-1596450514735-2d4090b82ebf?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #fff1f2;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #e11d48;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+
+<body class="bg-amber-50/40 text-slate-800 font-body antialiased overflow-x-hidden">
+
+ 
+  <div id="toast"
+    class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-chamoy-950 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center space-x-3 border-l-4 border-mango-500">
+    <i class="fas fa-fire text-mango-400 text-xl" id="toast-icon"></i>
+    <span id="toast-message" class="font-medium text-sm">¡Antojo añadido!</span>
+  </div>
+
+ 
+  <header
+    class="w-full fixed top-0 z-40 transition-all duration-300 bg-chamoy-950/95 backdrop-blur-md border-b border-chamoy-800"
+    id="main-header">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-8 py-3.5 flex justify-between items-center text-white">
+      
+      <a href="#" class="flex items-center space-x-2 text-2xl font-display font-black tracking-tight group">
+        <span
+          class="p-2  from-mango-500 to-chamoy-600 rounded-xl group-hover:scale-105 transition transform flex items-center justify-center">
+          
+        </span>
+        <img src="logo final.png" height="130" width="130" alt="">
+      </a>
+
+     
+      <div class="hidden lg:flex items-center space-x-8 text-sm font-semibold tracking-wide uppercase">
+        <a href="#hero" class="hover:text-mango-400 hover:text-mango-300 transition">Inicio</a>
+        <a href="#features" class="hover:text-mango-400 transition">¿Por qué nosotros?</a>
+        <a href="#menu" class="hover:text-mango-400 transition">Menú</a>
+        <a href="#builder" class="hover:text-mango-400 transition">Crea Tu Vaso</a>
+        <a href="#reviews" class="hover:text-mango-400 transition">Reseñas</a>
+        <a href="#footer" class="hover:text-mango-400 transition">Contacto</a>
+      </div>
+
+      
+      <div class="flex items-center space-x-4">
+        
+        <button onclick="toggleCartModal()"
+          class="relative bg-chamoy-900 hover:bg-chamoy-800 text-mango-400 p-2.5 rounded-xl border border-chamoy-700 transition">
+          <i class="fas fa-shopping-basket text-lg"></i>
+          <span id="cart-count"
+            class="absolute -top-1.5 -right-1.5 bg-mango-500 text-chamoy-950 text-xs w-5 h-5 rounded-full flex items-center justify-center font-extrabold shadow">0</span>
+        </button>
+
+        
+        <a href="#builder"
+          class="hidden sm:inline-block bg-yellow-400 from-mango-500 to-tajin-500 hover:from-mango-600 hover:to-tajin-600 text-chamoy-950 font-display font-extrabold text-xs uppercase tracking-wider px-5 py-3 rounded-xl shadow-lg transition duration-300 transform hover:-translate-y-0.5">
+          ARMADOR DE ANTOJO
+        </a>
+
+        
+        <button class="lg:hidden text-2xl text-mango-400" onclick="toggleMobileMenu()">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </nav>
+
+    
+    <div id="mobile-menu"
+      class="hidden lg:hidden bg-chamoy-900 border-b border-chamoy-800 px-6 py-4 space-y-3 font-semibold text-sm">
+      <a href="#hero" onclick="toggleMobileMenu()" class="block text-mango-400 py-1">Inicio</a>
+      <a href="#features" onclick="toggleMobileMenu()" class="block text-white hover:text-mango-400 py-1">¿Por qué
+        nosotros?</a>
+      <a href="#menu" onclick="toggleMobileMenu()" class="block text-white hover:text-mango-400 py-1">Menú Picosito</a>
+      <a href="#builder" onclick="toggleMobileMenu()" class="block text-white hover:text-mango-400 py-1">Crea Tu
+        Vaso</a>
+      <a href="#reviews" onclick="toggleMobileMenu()" class="block text-white hover:text-mango-400 py-1">Reseñas</a>
+      <a href="#footer" onclick="toggleMobileMenu()" class="block text-white hover:text-mango-400 py-1">Contacto</a>
+    </div>
+  </header>
+
+ 
+  <section id="hero"
+    class="relative pt-32 pb-20 min-h-[90vh] flex items-center hero-pattern text-white overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 sm:px-12 w-full grid md:grid-cols-12 gap-12 items-center relative z-10">
+      
+      <div class="md:col-span-7 space-y-6">
+        <span
+          class="inline-flex items-center gap-2 bg-mango-500/20 text-mango-300 border border-mango-500/40 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest">
+          <span>🌶️</span> ¡El Nuevo Antojo En Cochabamba!
+        </span>
+        <h1 class="font-display text-4xl sm:text-6xl lg:text-7xl font-black leading-none text-white tracking-tight">
+          Fruta Fresca con <br>
+          <span class="text-transparent bg-clip-text bg-yellow-400 from-mango-400 via-tajin-500 to-chamoy-500">
+            Chamoy & Tajín
+          </span>
+        </h1>
+        <p class="text-gray-300 max-w-xl text-base sm:text-lg leading-relaxed">
+          Preparados al momento con fruta 100% fresca natural, nuestra receta exclusiva de chamoy y tajín de la casa y
+          gomitas.
+        </p>
+        <div class="flex flex-wrap gap-4 pt-4">
+          <a href="#menu"
+            class="bg-chamoy-950/95 from-chamoy-600 to-chamoy-700 hover:from-chamoy-500 hover:to-chamoy-600 text-white font-display font-extrabold text-sm uppercase tracking-wider px-8 py-4 rounded-xl shadow-xl hover:shadow-chamoy-600/30 transition duration-300 flex items-center gap-2">
+            <span>Ver Menú</span>
+            <i class="fas fa-arrow-right"></i>
+          </a>
+          <a href="#builder"
+            class="bg-mango-500 hover:bg-mango-400 text-chamoy-950 font-display font-extrabold text-sm uppercase tracking-wider px-8 py-4 rounded-xl shadow-xl transition duration-300 flex items-center gap-2">
+            <span>Armar Mi Vaso</span>
+            <i class="fas fa-mortar-pestle"></i>
+          </a>
+        </div>
+        
+        <div class="pt-8 border-t border-chamoy-800/80 flex items-center space-x-6 text-xs text-gray-400">
+          <div class="flex items-center space-x-2">
+            <i class="fas fa-truck-fast text-mango-400 text-base"></i>
+            <span>Envíos a Domicilio</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <i class="fas fa-lemon text-mango-400 text-base"></i>
+            <span>100% Fruta del Día</span>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="md:col-span-5 relative">
+        <div
+          class="relative z-10 bg-gradient-to-b from-chamoy-900 to-chamoy-950 p-4 rounded-3xl border-2 border-chamoy-700/50 shadow-2xl transform rotate-2 hover:rotate-0 transition duration-500">
+          <img src="Vaso de frutas con chamoy y tajín (1)44.png"
+            alt="Vaso de Mango con Chamoy" class="rounded-2xl w-full h-80 sm:h-96 object-cover">
+          <div
+            class="absolute -bottom-6 -left-6 bg-mango-500 text-chamoy-950 p-4 rounded-2xl shadow-xl border-2 border-white flex items-center gap-3">
+            <span class="text-3xl">🔥</span>
+            <div>
+              <p class="font-display font-black text-sm uppercase">¡Favorito de la Casa!</p>
+              <p class="text-xs font-semibold opacity-90">Vaso de frutas con chamoy y tajín</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <section id="features" class="py-16 bg-white relative">
+    <div class="max-w-7xl mx-auto px-6 sm:px-12">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        
+        <div
+          class="bg-amber-50/50 p-8 rounded-2xl border border-amber-200/60 hover:shadow-xl transition duration-300 text-center group">
+          <div
+            class="w-16 h-16 bg-mango-500 text-chamoy-950 rounded-2xl flex items-center justify-center mx-auto mb-6 text-2xl group-hover:scale-110 transition duration-300 shadow-md">
+            <i class="fas fa-apple-whole"></i>
+          </div>
+          <h3 class="font-display font-bold text-xl text-chamoy-950 mb-2">100% Fruta Fresca</h3>
+          <p class="text-gray-600 text-xs leading-relaxed">Seleccionamos las frutas más jugosas del día para garantizar
+            un sabor increíble en cada bocado.</p>
+        </div>
+        
+        <div
+          class="bg-amber-50/50 p-8 rounded-2xl border border-amber-200/60 hover:shadow-xl transition duration-300 text-center group">
+          <div
+            class="w-16 h-16 bg-chamoy-600 text-white rounded-2xl flex items-center justify-center mx-auto mb-6 text-2xl group-hover:scale-110 transition duration-300 shadow-md">
+            <i class="fas fa-pepper-hot"></i>
+          </div>
+          <h3 class="font-display font-bold text-xl text-chamoy-950 mb-2">Chamoy y Tajín Artesanal</h3>
+          <p class="text-gray-600 text-xs leading-relaxed">Nuestra receta secreta agridulce balanceada perfectamente
+            entre lo dulce, acidito y picante.</p>
+        </div>
+       
+        <div
+          class="bg-amber-50/50 p-8 rounded-2xl border border-amber-200/60 hover:shadow-xl transition duration-300 text-center group">
+          <div
+            class="w-16 h-16 bg-tajin-500 text-white rounded-2xl flex items-center justify-center mx-auto mb-6 text-2xl group-hover:scale-110 transition duration-300 shadow-md">
+            <i class="fas fa-candy-cane"></i>
+          </div>
+          <h3 class="font-display font-bold text-xl text-chamoy-950 mb-2">Topping de Gomitas</h3>
+          <p class="text-gray-600 text-xs leading-relaxed">Ositos de goma, Aros de gomita y gusanos de goma.</p>
+        </div>
+        
+        <div
+          class="bg-amber-50/50 p-8 rounded-2xl border border-amber-200/60 hover:shadow-xl transition duration-300 text-center group">
+          <div
+            class="w-16 h-16 bg-emerald-600 text-white rounded-2xl flex items-center justify-center mx-auto mb-6 text-2xl group-hover:scale-110 transition duration-300 shadow-md">
+            <i class="fas fa-bolt"></i>
+          </div>
+          <h3 class="font-display font-bold text-xl text-chamoy-950 mb-2">Envíos Rápidos</h3>
+          <p class="text-gray-600 text-xs leading-relaxed">Preparamos tu antojo al momento para que llegue fresco y en
+            su punto hasta tu puerta.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <section id="menu" class="py-24 bg-amber-50/50">
+    <div class="max-w-7xl mx-auto px-6 sm:px-12">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-chamoy-600 font-display font-extrabold uppercase text-xs tracking-widest">NUESTRO MENÚ</span>
+        <h2 class="font-display text-4xl sm:text-5xl font-black text-chamoy-950 mt-1">Los Antojos Más Buscados</h2>
+        <div class="w-20 h-1.5 bg-gradient-to-r from-mango-500 to-chamoy-600 mx-auto mt-3 rounded-full"></div>
+      </div>
+
+     
+      <div class="flex justify-center flex-wrap gap-3 mb-12" id="menu-filters">
+        <button onclick="filterMenu('all')"
+          class="filter-btn active bg-chamoy-900 text-white text-xs font-display font-bold uppercase tracking-wider px-6 py-3 rounded-xl transition shadow-md">
+          Todos
+        </button>
+        <button onclick="filterMenu('vasos')"
+          class="filter-btn bg-white hover:bg-chamoy-100 text-chamoy-950 text-xs font-display font-bold uppercase tracking-wider px-6 py-3 rounded-xl transition shadow-sm border border-amber-200">
+          Vasos Común
+        </button>
+        <button onclick="filterMenu('locuras')"
+          class="filter-btn bg-white hover:bg-chamoy-100 text-chamoy-950 text-xs font-display font-bold uppercase tracking-wider px-6 py-3 rounded-xl transition shadow-sm border border-amber-200">
+          Vaso Especial
+        </button>
+        <button onclick="filterMenu('botanas')"
+          class="filter-btn bg-white hover:bg-chamoy-100 text-chamoy-950 text-xs font-display font-bold uppercase tracking-wider px-6 py-3 rounded-xl transition shadow-sm border border-amber-200">
+          Vaso Mixto
+        </button>
+      </div>
+
+     
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8" id="menu-grid">
+        
+        <div
+          class="menu-item vasos bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition duration-300 border border-amber-100 flex flex-col justify-between group">
+          <div class="relative overflow-hidden h-80 bg-amber-100">
+            <img src="image_961941da (1).jpg" 
+              alt="Vaso Común" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+            <span
+              class="absolute top-4 left-4 bg-mango-500 text-chamoy-950 text-[10px] font-display font-black uppercase tracking-wider px-3 py-1 rounded-full shadow">
+              Más Vendido
+            </span>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="font-display font-bold text-xl text-chamoy-950">Vaso Común</h3>
+                <span class="font-display font-black text-chamoy-700 text-xl">10 Bs</span>
+              </div>
+              <p class="text-gray-500 text-xs leading-relaxed mb-4">
+                Vaso con elección a dos frutas (Mango, Sandía, Piña) y Chamoy con Tajín.
+              </p>
+            </div>
+            
+          </div>
+        </div>
+
+        
+        <div
+          class="menu-item locuras bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition duration-300 border border-amber-100 flex flex-col justify-between group">
+          <div class="relative overflow-hidden h-80 bg-amber-100">
+            <img src="Vaso de frutas con chamoy y tajín22.png"
+              alt="Vaso Especial" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+            <span
+              class="absolute top-4 left-4 bg-chamoy-600 text-white text-[10px] font-display font-black uppercase tracking-wider px-3 py-1 rounded-full shadow">
+              Super Gomitas
+            </span>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="font-display font-bold text-xl text-chamoy-950">Vaso Especial</h3>
+                <span class="font-display font-black text-chamoy-700 text-xl">15 Bs</span>
+              </div>
+              <p class="text-gray-500 text-xs leading-relaxed mb-4">
+                Vaso lleno de gomitas, Chamoy y Tajín.
+              </p>
+            </div>
+            
+          </div>
+        </div>
+
+       
+        <div
+          class="menu-item botanas bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition duration-300 border border-amber-100 flex flex-col justify-between group">
+          <div class="relative overflow-hidden h-80 bg-amber-100">
+            <img src="image_d9e1b519 (1).jpg"
+              alt="Combo Mixto" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+            <span
+              class="absolute top-4 left-4 bg-emerald-600 text-white text-[10px] font-display font-black uppercase tracking-wider px-3 py-1 rounded-full shadow">
+              Mega Combo
+            </span>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="font-display font-bold text-xl text-chamoy-950">Combo Mixto</h3>
+                <span class="font-display font-black text-chamoy-700 text-xl">20 Bs</span>
+              </div>
+              <p class="text-gray-500 text-xs leading-relaxed mb-4">
+                Mega vaso con frutas con opción a 3 frutas (Mango + Sandía + Piña) + Gomitas + Chamoy y Tajín.
+              </p>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ 
+  <section id="builder" class="py-24 bg-gradient-to-b from-chamoy-950 to-chamoy-900 text-white relative">
+    <div class="max-w-5xl mx-auto px-6 sm:px-12">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <span class="text-mango-400 font-display font-extrabold uppercase text-xs tracking-widest">PERSONALIZADOR DE
+          ANTOJOS</span>
+        <h2 class="font-display text-4xl sm:text-5xl font-black text-white mt-1">Crea Tu Vaso Ideal</h2>
+        <p class="text-gray-300 text-sm mt-2">Elige tus frutas, nivel de picante y toppings favoritos a tu gusto exacto.
+        </p>
+      </div>
+
+      
+      <div class="bg-chamoy-900/80 border-2 border-chamoy-700 rounded-3xl p-6 sm:p-10 shadow-2xl backdrop-blur-md">
+       
+        <div class="mb-8">
+          <label class="block font-display font-extrabold text-sm uppercase text-mango-400 tracking-wider mb-3">
+            Paso 1: Elige tu Fruta Base (Precio base 10 Bs)
+          </label>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <button type="button" onclick="selectFruit(this, 'Mango con Piña', 10)"
+              class="fruit-opt bg-chamoy-950 hover:bg-chamoy-800 border-2 border-mango-500 text-white font-semibold py-3 px-4 rounded-xl text-xs flex items-center justify-between transition">
+              <span>Mango con Piña</span>
+              <i class="fas fa-check text-mango-400"></i>
+            </button>
+            <button type="button" onclick="selectFruit(this, 'Sandía con Piña', 10)"
+              class="fruit-opt bg-chamoy-950 hover:bg-chamoy-800 border-2 border-transparent text-white font-semibold py-3 px-4 rounded-xl text-xs flex items-center justify-between transition">
+              <span>Sandía con Piña</span>
+              <i class="fas fa-check text-mango-400 opacity-0"></i>
+            </button>
+            <button type="button" onclick="selectFruit(this, 'Mango con Sandía', 10)"
+              class="fruit-opt bg-chamoy-950 hover:bg-chamoy-800 border-2 border-transparent text-white font-semibold py-3 px-4 rounded-xl text-xs flex items-center justify-between transition">
+              <span>Mango con Sandía</span>
+              <i class="fas fa-check text-mango-400 opacity-0"></i>
+            </button>
+            <button type="button" onclick="selectFruit(this, 'Vaso de Gomitas', 0)"
+              class="fruit-opt bg-chamoy-950 hover:bg-chamoy-800 border-2 border-transparent text-white font-semibold py-3 px-4 rounded-xl text-xs flex items-center justify-between transition">
+              <span>Vaso de Gomitas </span>
+              <i class="fas fa-check text-mango-400 opacity-0"></i>
+            </button>
+            <button type="button" onclick="selectFruit(this, 'Mix Especial', 20)"
+              class="fruit-opt bg-chamoy-950 hover:bg-chamoy-800 border-2 border-transparent text-white font-semibold py-3 px-4 rounded-xl text-xs flex items-center justify-between transition">
+              <span>Mix Especial </span>
+              <i class="fas fa-check text-mango-400 opacity-0"></i>
+            </button>
+          </div>
+        </div>
+
+       
+        <div class="mb-8">
+          <label class="block font-display font-extrabold text-sm uppercase text-mango-400 tracking-wider mb-3">
+            Paso 2: Nivel de Chamoy & Chile
+          </label>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <button type="button" onclick="selectSauce(this, 'Chamoy Dulce')"
+              class="sauce-opt bg-chamoy-950 hover:bg-chamoy-800 border-2 border-mango-500 text-white font-semibold py-3 px-3 rounded-xl text-xs text-center transition">
+              Chamoy Dulce
+            </button>
+            <button type="button" onclick="selectSauce(this, 'Dulce + Picante')"
+              class="sauce-opt bg-chamoy-950 hover:bg-chamoy-800 border-2 border-transparent text-white font-semibold py-3 px-3 rounded-xl text-xs text-center transition">
+              Dulce + Picante
+            </button>
+            <button type="button" onclick="selectSauce(this, 'Picante!')"
+              class="sauce-opt bg-chamoy-950 hover:bg-chamoy-800 border-2 border-transparent text-white font-semibold py-3 px-3 rounded-xl text-xs text-center transition">
+              Picante!
+            </button>
+          </div>
+        </div>
+
+       
+        <div class="mb-8">
+          <label class="block font-display font-extrabold text-sm uppercase text-mango-400 tracking-wider mb-3">
+            Paso 3: Elige tus Toppings (+5 Bs c/u)
+          </label>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <label
+              class="flex items-center space-x-3 bg-chamoy-950 p-3 rounded-xl border border-chamoy-800 cursor-pointer hover:border-mango-500 transition">
+              <input type="checkbox" onchange="toggleTopping('Ositos de Goma', 5, this)"
+                class="w-4 h-4 accent-mango-500 rounded">
+              <span class="text-xs font-medium">Ositos de Goma</span>
+            </label>
+            <label
+              class="flex items-center space-x-3 bg-chamoy-950 p-3 rounded-xl border border-chamoy-800 cursor-pointer hover:border-mango-500 transition">
+              <input type="checkbox" onchange="toggleTopping('Aros de Gomita', 5, this)"
+                class="w-4 h-4 accent-mango-500 rounded">
+              <span class="text-xs font-medium">Aros de Gomita</span>
+            </label>
+            <label
+              class="flex items-center space-x-3 bg-chamoy-950 p-3 rounded-xl border border-chamoy-800 cursor-pointer hover:border-mango-500 transition">
+              <input type="checkbox" onchange="toggleTopping('Gusanitos de Goma', 5, this)"
+                class="w-4 h-4 accent-mango-500 rounded">
+              <span class="text-xs font-medium">Gusanitos de Goma</span>
+            </label>
+          </div>
+        </div>
+
+       
+        <div class="pt-6 border-t border-chamoy-800 flex flex-col md:flex-row justify-between items-center gap-4">
+          <div class="w-full md:w-auto">
+            <span class="text-xs uppercase text-gray-400 font-semibold">Resumen de tu Creación:</span>
+            <p id="custom-summary" class="text-sm font-display font-bold text-mango-300">Vaso Mango con Piña (Chamoy
+              Dulce)</p>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-between md:justify-end gap-4 w-full md:w-auto">
+          
+            <div class="flex items-center bg-chamoy-950 border border-chamoy-700 rounded-xl p-1">
+              <button type="button" onclick="changeCustomQty(-1)"
+                class="w-9 h-9 rounded-lg bg-chamoy-900 hover:bg-chamoy-800 text-mango-400 font-bold flex items-center justify-center transition">
+                <i class="fas fa-minus text-xs"></i>
+              </button>
+              <span id="custom-qty" class="w-10 text-center font-display font-black text-sm text-white">1</span>
+              <button type="button" onclick="changeCustomQty(1)"
+                class="w-9 h-9 rounded-lg bg-chamoy-900 hover:bg-chamoy-800 text-mango-400 font-bold flex items-center justify-center transition">
+                <i class="fas fa-plus text-xs"></i>
+              </button>
+            </div>
+
+           
+            <span id="custom-price" class="font-display font-black text-3xl text-white">10 Bs</span>
+
+           
+            <button onclick="addCustomToCart()"
+              class="bg-yellow-400 from-mango-500 to-tajin-500 hover:from-mango-400 hover:to-tajin-400 text-chamoy-950 font-display font-black uppercase text-xs tracking-wider px-6 py-4 rounded-xl shadow-xl transition transform hover:scale-105">
+              ¡Añadir Mi Creación!
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ 
+  <section id="reviews" class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-6 sm:px-12">
+      
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <span class="text-chamoy-600 font-display font-extrabold uppercase text-xs tracking-widest">OPINIONES DE
+          NUESTROS CLIENTES</span>
+        <h2 class="font-display text-4xl sm:text-5xl font-black text-chamoy-950 mt-1">Experiencias y Calificaciones</h2>
+        <div class="w-20 h-1.5 bg-mango-500 mx-auto mt-3 rounded-full"></div>
+      </div>
+
+      
+      <div class="bg-amber-50/50 rounded-3xl border border-amber-200/70 p-6 sm:p-10 mb-12 shadow-sm">
+        <div class="grid md:grid-cols-12 gap-8 items-center">
+          
+          <div
+            class="md:col-span-4 text-center border-b md:border-b-0 md:border-r border-amber-200/80 pb-6 md:pb-0 md:pr-6">
+            <div class="font-display font-black text-6xl sm:text-7xl text-chamoy-950" id="summary-avg-score">4.8</div>
+            <div class="flex justify-center text-mango-500 text-xl my-2 space-x-1" id="summary-avg-stars">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+            </div>
+            <p class="text-xs font-semibold text-gray-500" id="summary-total-count">Basado en 128 valoraciones</p>
+
+            <button onclick="toggleReviewModal()"
+              class="mt-5 w-full sm:w-auto bg-gradient-to-r from-chamoy-600 to-chamoy-700 hover:from-chamoy-500 hover:to-chamoy-600 text-white font-display font-black text-xs uppercase tracking-wider px-6 py-3.5 rounded-xl shadow-lg transition duration-300 transform hover:-translate-y-0.5">
+              <i class="fas fa-pen mr-2"></i>Escribir una Reseña
+            </button>
+          </div>
+
+         
+          <div class="md:col-span-8 space-y-2.5">
+            
+            <div class="flex items-center text-xs space-x-3">
+              <span class="w-12 font-bold text-gray-700 flex items-center">5 <i
+                  class="fas fa-star text-mango-500 ml-1 text-[10px]"></i></span>
+              <div class="flex-1 bg-amber-200/60 h-3 rounded-full overflow-hidden">
+                <div class="bg-mango-500 h-full rounded-full transition-all duration-500" style="width: 85%" id="bar-5">
+                </div>
+              </div>
+              <span class="w-10 text-right text-gray-500 font-semibold" id="count-5">85%</span>
+            </div>
+           
+            <div class="flex items-center text-xs space-x-3">
+              <span class="w-12 font-bold text-gray-700 flex items-center">4 <i
+                  class="fas fa-star text-mango-500 ml-1 text-[10px]"></i></span>
+              <div class="flex-1 bg-amber-200/60 h-3 rounded-full overflow-hidden">
+                <div class="bg-mango-500 h-full rounded-full transition-all duration-500" style="width: 10%" id="bar-4">
+                </div>
+              </div>
+              <span class="w-10 text-right text-gray-500 font-semibold" id="count-4">10%</span>
+            </div>
+            
+            <div class="flex items-center text-xs space-x-3">
+              <span class="w-12 font-bold text-gray-700 flex items-center">3 <i
+                  class="fas fa-star text-mango-500 ml-1 text-[10px]"></i></span>
+              <div class="flex-1 bg-amber-200/60 h-3 rounded-full overflow-hidden">
+                <div class="bg-mango-500 h-full rounded-full transition-all duration-500" style="width: 3%" id="bar-3">
+                </div>
+              </div>
+              <span class="w-10 text-right text-gray-500 font-semibold" id="count-3">3%</span>
+            </div>
+            
+            <div class="flex items-center text-xs space-x-3">
+              <span class="w-12 font-bold text-gray-700 flex items-center">2 <i
+                  class="fas fa-star text-mango-500 ml-1 text-[10px]"></i></span>
+              <div class="flex-1 bg-amber-200/60 h-3 rounded-full overflow-hidden">
+                <div class="bg-mango-500 h-full rounded-full transition-all duration-500" style="width: 1%" id="bar-2">
+                </div>
+              </div>
+              <span class="w-10 text-right text-gray-500 font-semibold" id="count-2">1%</span>
+            </div>
+            
+            <div class="flex items-center text-xs space-x-3">
+              <span class="w-12 font-bold text-gray-700 flex items-center">1 <i
+                  class="fas fa-star text-mango-500 ml-1 text-[10px]"></i></span>
+              <div class="flex-1 bg-amber-200/60 h-3 rounded-full overflow-hidden">
+                <div class="bg-mango-500 h-full rounded-full transition-all duration-500" style="width: 1%" id="bar-1">
+                </div>
+              </div>
+              <span class="w-10 text-right text-gray-500 font-semibold" id="count-1">1%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+     
+      <div
+        class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 bg-white p-4 rounded-2xl border border-gray-100 shadow-sm">
+       
+        <div class="flex flex-wrap gap-2 text-xs font-semibold" id="review-stars-filter">
+          <button onclick="filterReviewsByStars('all')"
+            class="rev-filter-btn active bg-chamoy-950 text-white px-4 py-2 rounded-xl border border-chamoy-900 transition">
+            Todas
+          </button>
+          <button onclick="filterReviewsByStars(5)"
+            class="rev-filter-btn bg-amber-50 hover:bg-amber-100 text-gray-700 px-4 py-2 rounded-xl border border-amber-200 transition flex items-center gap-1">
+            5 <i class="fas fa-star text-mango-500"></i>
+          </button>
+          <button onclick="filterReviewsByStars(4)"
+            class="rev-filter-btn bg-amber-50 hover:bg-amber-100 text-gray-700 px-4 py-2 rounded-xl border border-amber-200 transition flex items-center gap-1">
+            4 <i class="fas fa-star text-mango-500"></i>
+          </button>
+          <button onclick="filterReviewsByStars(3)"
+            class="rev-filter-btn bg-amber-50 hover:bg-amber-100 text-gray-700 px-4 py-2 rounded-xl border border-amber-200 transition flex items-center gap-1">
+            3 <i class="fas fa-star text-mango-500"></i>
+          </button>
+        </div>
+
+       
+        <div class="flex items-center space-x-2 text-xs w-full sm:w-auto">
+          <label class="text-gray-500 font-medium whitespace-nowrap">Ordenar por:</label>
+          <select id="review-sort-select" onchange="sortReviews(this.value)"
+            class="bg-amber-50/80 border border-amber-200 rounded-xl px-3 py-2 text-chamoy-950 font-bold focus:outline-none focus:ring-2 focus:ring-mango-500 w-full sm:w-auto">
+            <option value="recent">Más Recientes</option>
+            <option value="highest">Mayor Calificación</option>
+            <option value="lowest">Menor Calificación</option>
+          </select>
+        </div>
+      </div>
+
+      
+      <div id="reviews-list" class="space-y-6">
+        
+      </div>
+    </div>
+  </section>
+
+  
+  <div id="review-modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm justify-center items-center p-4">
+    <div
+      class="bg-white w-full max-w-lg rounded-3xl shadow-2xl p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+     
+      <button onclick="toggleReviewModal()"
+        class="absolute top-6 right-6 text-gray-400 hover:text-chamoy-800 text-xl transition">
+        <i class="fas fa-times"></i>
+      </button>
+
+      
+      <div class="mb-6">
+        <span class="text-mango-600 font-display font-extrabold uppercase text-[11px] tracking-widest">TU OPINIÓN
+          CUENTA</span>
+        <h3 class="font-display font-black text-2xl text-chamoy-950">Déjanos tu Reseña</h3>
+        <p class="text-gray-500 text-xs mt-1">Cuéntanos sobre el sabor, frescura y tu antojo favorito.</p>
+      </div>
+
+      
+      <form id="review-form" onsubmit="submitReview(event)" class="space-y-4 text-xs">
+       
+        <div>
+          <label class="block font-bold text-gray-700 mb-1.5">Tu Calificación General *</label>
+          <div class="flex items-center space-x-2 bg-amber-50 p-3 rounded-2xl border border-amber-200">
+            <div class="flex text-2xl text-amber-300 space-x-1 cursor-pointer" id="modal-star-rating">
+              <i class="fas fa-star transition" onclick="setFormRating(1)" onmouseover="hoverFormRating(1)"
+                onmouseleave="resetFormRatingHover()"></i>
+              <i class="fas fa-star transition" onclick="setFormRating(2)" onmouseover="hoverFormRating(2)"
+                onmouseleave="resetFormRatingHover()"></i>
+              <i class="fas fa-star transition" onclick="setFormRating(3)" onmouseover="hoverFormRating(3)"
+                onmouseleave="resetFormRatingHover()"></i>
+              <i class="fas fa-star transition" onclick="setFormRating(4)" onmouseover="hoverFormRating(4)"
+                onmouseleave="resetFormRatingHover()"></i>
+              <i class="fas fa-star transition" onclick="setFormRating(5)" onmouseover="hoverFormRating(5)"
+                onmouseleave="resetFormRatingHover()"></i>
+            </div>
+            <span id="rating-feedback-text" class="text-xs font-display font-bold text-chamoy-700 ml-3">¡Excelente!
+              (5/5)</span>
+          </div>
+        </div>
+
+       
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Tu Nombre *</label>
+            <input type="text" id="rev-name" required placeholder="Ej. Mariana López"
+              class="w-full bg-amber-50/60 border border-amber-200 rounded-xl px-3.5 py-2.5 text-gray-800 focus:outline-none focus:ring-2 focus:ring-mango-500">
+          </div>
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Correo Electrónico *</label>
+            <input type="email" id="rev-email" required placeholder="mariana@ejemplo.com"
+              class="w-full bg-amber-50/60 border border-amber-200 rounded-xl px-3.5 py-2.5 text-gray-800 focus:outline-none focus:ring-2 focus:ring-mango-500">
+          </div>
+        </div>
+
+        
+        <div>
+          <label class="block font-bold text-gray-700 mb-1">Título de tu Reseña *</label>
+          <input type="text" id="rev-title" required placeholder="Ej. ¡El mejor chamoy de Cochabamba!"
+            class="w-full bg-amber-50/60 border border-amber-200 rounded-xl px-3.5 py-2.5 text-gray-800 focus:outline-none focus:ring-2 focus:ring-mango-500">
+        </div>
+
+       
+        <div>
+          <label class="block font-bold text-gray-700 mb-1">Comentario Detallado *</label>
+          <textarea id="rev-comment" required rows="4"
+            placeholder="Cuéntanos qué pediste, cómo llegó la fruta y qué tal el chamoy..."
+            class="w-full bg-amber-50/60 border border-amber-200 rounded-xl px-3.5 py-2.5 text-gray-800 focus:outline-none focus:ring-2 focus:ring-mango-500"></textarea>
+        </div>
+
+       
+        <div class="flex items-center space-x-2.5 pt-1">
+          <input type="checkbox" id="rev-recommend" checked class="w-4 h-4 accent-chamoy-600 rounded cursor-pointer">
+          <label for="rev-recommend" class="text-gray-700 font-medium cursor-pointer">Recomiendo este emprendimiento a
+            otros amantes del chamoy</label>
+        </div>
+
+       
+        <div class="pt-4">
+          <button type="submit"
+            class="w-full bg-gradient-to-r from-chamoy-700 to-chamoy-800 hover:from-chamoy-600 hover:to-chamoy-700 text-white font-display font-black text-xs uppercase tracking-wider py-4 rounded-xl shadow-lg transition duration-300">
+            Publicar Reseña
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  
+  <footer id="footer" class="bg-chamoy-950 text-white pt-16 pb-8 border-t border-chamoy-900">
+    <div
+      class="max-w-7xl mx-auto px-6 sm:px-12 grid grid-cols-1 md:grid-cols-12 gap-12 pb-12 border-b border-chamoy-900">
+      
+      <div class="md:col-span-5 space-y-4">
+        <a href="#" class="flex items-center space-x-2 text-2xl font-display font-black tracking-tight text-white">
+          <span class="p-2 bg-gradient-to-br from-mango-500 to-chamoy-600 rounded-xl flex items-center justify-center">
+            <i class="fas fa-pepper-hot text-white text-base"></i>
+          </span>
+          <img src="logo final.png" width="400" height="400" alt="Picadely">
+        </a>
+        <p class="text-xs text-gray-400 leading-relaxed max-w-sm">
+          El mejor emprendimiento de fruta fresca con chamoy artesanal, tajín y dulces mexicanos. Preparados con
+          higiene, amor y el toque picosito perfecto.
+        </p>
+        <div class="flex space-x-4 pt-2">
+          <a href="#"
+            class="w-9 h-9 bg-chamoy-900 rounded-xl flex items-center justify-center text-mango-400 hover:bg-mango-500 hover:text-chamoy-950 transition">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#"
+            class="w-9 h-9 bg-chamoy-900 rounded-xl flex items-center justify-center text-mango-400 hover:bg-mango-500 hover:text-chamoy-950 transition">
+            <i class="fab fa-tiktok"></i>
+          </a>
+          <a href="#"
+            class="w-9 h-9 bg-chamoy-900 rounded-xl flex items-center justify-center text-mango-400 hover:bg-mango-500 hover:text-chamoy-950 transition">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+        </div>
+        <div class="md:col-span-3 space-y-3">
+        <h4 class="font-display font-bold text-sm text-mango-400 uppercase tracking-wider">Horarios de Atención</h4>
+        <ul class="space-y-2 text-xs text-gray-400">
+          <li><strong class="text-white">Lunes a Viernes:</strong> 12:00 PM - 9:00 PM</li>
+          <li><strong class="text-white">Sábados y Domingos:</strong> 11:00 AM - 10:00 PM</li>
+          <li class="text-mango-400 font-semibold mt-2">✨ Pedidos a domicilio abiertos</li>
+           <p><i class="fas fa-location-dot text-chamoy-500 mr-2"></i> Cobertura en Cochabamba</p>
+          <p><i class="fab fa-whatsapp text-emerald-400 mr-2"></i> WhatsApp Directo: +591 62198947</p>
+          <p><i class="fas fa-envelope text-mango-400 mr-2"></i> hola@Picadely.com</p>
+        </ul>
+      </div>
+      </div>
+      <div class="md:col-span-6 space-y-6">
+      <h4 class="font-display font-bold text-sm text-mango-400 uppercase tracking-wider flex items-center gap-2">
+        <i class="fas fa-location-dot text-chamoy-500"></i> Nuestra Ubicación
+      </h4>
+      <div class=" rounded-2xl overflow-hidden border border-chamoy-800 shadow-md">
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3807.4066727174127!2d-66.15061202546741!3d-17.392260664325566!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x93e373f8d705ee63%3A0x8b64d1ced4c8c13f!2sPlaza%20Sucre!5e0!3m2!1ses!2sbo!4v1794273594015!5m2!1ses!2sbo" 
+          width="1000" 
+          height="500" 
+          style="border:0;" 
+          allowfullscreen="" 
+          loading="lazy" 
+          referrerpolicy="strict-origin-when-cross-origin">
+        </iframe>
+      </div>
+    <div class="max-w-7xl mx-auto px-6 sm:px-12 pt-6 text-center text-xs text-gray-500">
+      <p>© 2026 Picadely Chamoy & Snacks. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+ 
+  <div id="cart-modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm justify-end">
+    <div class="bg-white w-full max-w-md h-full p-6 flex flex-col justify-between shadow-2xl">
+      <div>
+        <div class="flex justify-between items-center pb-4 border-b border-gray-100">
+          <div class="flex items-center space-x-2">
+            <span class="text-xl">🌶️</span>
+            <h3 class="font-display font-bold text-xl text-chamoy-950">Tu Pedido Picosito</h3>
+          </div>
+          <button onclick="toggleCartModal()" class="text-gray-400 hover:text-chamoy-800 text-xl">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        
+        <div id="cart-items" class="py-6 space-y-4 max-h-[60vh] overflow-y-auto custom-scrollbar">
+          <p class="text-gray-400 text-xs text-center py-8">Tu carrito está vacío <br>¡Agrega tu fruta o vaso preferido!
+          </p>
+        </div>
+      </div>
+      
+
+      
+      <div class="border-t border-gray-100 pt-4 space-y-4">
+        <div class="flex justify-between font-display font-black text-xl text-chamoy-950">
+          <span>Total estimado:</span>
+          <span id="cart-total">0 Bs</span>
+        </div>
+        <p class="text-[10px] text-gray-400 text-center">Al presionar el botón se generará el mensaje listo para enviar
+          a nuestro WhatsApp.</p>
+        <button onclick="checkoutWhatsApp()"
+          class="w-full bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-display font-black py-4 rounded-2xl text-xs uppercase tracking-wider flex items-center justify-center space-x-2 shadow-lg transition">
+          <i class="fab fa-whatsapp text-lg"></i>
+          <span>Enviar Pedido por WhatsApp</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  
+  <script>
+    
+    let cart = [];
+    let customBowl = {
+      fruit: 'Mango con Piña',
+      fruitPrice: 10,
+      sauce: 'Chamoy Dulce',
+      toppings: [],
+      quantity: 1
+    };
+
+    
+    let reviewsData = [
+      {
+        id: 1,
+        name: "Camila Fernandez",
+        date: "Hace 2 días",
+        rating: 5,
+        title: "¡El mejor chamoy de Cochabamba!",
+        comment: "La fruta venía súper fresca y heladita. El chamoy tiene el punto exacto entre ácido y dulce. Sin duda se volvió mi antojo favorito de las tardes.",
+        likes: 12,
+        verified: true,
+        recommend: true
+      },
+      {
+        id: 2,
+        name: "Mateo Siles",
+        date: "Hace 5 días",
+        rating: 5,
+        title: "Súper recomendado el Combo Mixto",
+        comment: "Pedí el Combo Mixto de 20Bs y rinde muchísimo. Las gomitas venían bien cubiertas y el envío a domicilio por WhatsApp fue súper veloz.",
+        likes: 8,
+        verified: true,
+        recommend: true
+      },
+      {
+        id: 3,
+        name: "Lucía Morales",
+        date: "Hace 1 semana",
+        rating: 4,
+        title: "Muy rico pero picante",
+        comment: "Pedí el nivel de chile 'Picante!' y de verdad pica bastante jaja, pero la fruta riquísima. Para la próxima pediré Dulce + Picante.",
+        likes: 4,
+        verified: true,
+        recommend: true
+      }
+    ];
+
+    let selectedFormRating = 5;
+    let currentStarFilter = 'all';
+
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      renderReviews();
+    });
+
+    
+    function selectFruit(btn, fruitName, price) {
+      document.querySelectorAll('.fruit-opt').forEach(b => {
+        b.classList.remove('border-mango-500');
+        b.classList.add('border-transparent');
+        b.querySelector('.fa-check').classList.add('opacity-0');
+      });
+      btn.classList.remove('border-transparent');
+      btn.classList.add('border-mango-500');
+      btn.querySelector('.fa-check').classList.remove('opacity-0');
+      customBowl.fruit = fruitName;
+      customBowl.fruitPrice = price;
+      updateCustomSummary();
+    }
+
+    function selectSauce(btn, sauceName) {
+      document.querySelectorAll('.sauce-opt').forEach(b => {
+        b.classList.remove('border-mango-500');
+        b.classList.add('border-transparent');
+      });
+      btn.classList.remove('border-transparent');
+      btn.classList.add('border-mango-500');
+      customBowl.sauce = sauceName;
+      updateCustomSummary();
+    }
+
+    function toggleTopping(name, price, checkbox) {
+      if (checkbox.checked) {
+        customBowl.toppings.push({ name, price });
+      } else {
+        customBowl.toppings = customBowl.toppings.filter(t => t.name !== name);
+      }
+      updateCustomSummary();
+    }
+
+    function changeCustomQty(delta) {
+      customBowl.quantity = Math.max(1, customBowl.quantity + delta);
+      document.getElementById('custom-qty').innerText = customBowl.quantity;
+      updateCustomSummary();
+    }
+
+    function updateCustomSummary() {
+      let unitToppingsCost = customBowl.toppings.reduce((sum, t) => sum + t.price, 0);
+      let unitTotal = customBowl.fruitPrice + unitToppingsCost;
+      let grandTotal = unitTotal * customBowl.quantity;
+
+      let toppingText = customBowl.toppings.length > 0
+        ? ' + ' + customBowl.toppings.map(t => t.name).join(', ')
+        : '';
+
+      document.getElementById('custom-summary').innerText = `Vaso ${customBowl.fruit} (${customBowl.sauce})${toppingText}`;
+      document.getElementById('custom-price').innerText = `${grandTotal} Bs`;
+    }
+
+    function addCustomToCart() {
+      let unitToppingsCost = customBowl.toppings.reduce((sum, t) => sum + t.price, 0);
+      let unitTotal = customBowl.fruitPrice + unitToppingsCost;
+      let grandTotal = unitTotal * customBowl.quantity;
+
+      let title = `${customBowl.quantity}x Vaso Personalizado (${customBowl.fruit} + ${customBowl.sauce})`;
+
+      addToCart(title, grandTotal);
+
+      
+      customBowl.quantity = 1;
+      document.getElementById('custom-qty').innerText = 1;
+      updateCustomSummary();
+    }
+
+    
+    function addToCart(title, price) {
+      cart.push({ title, price });
+      updateCartUI();
+      showToast(`¡${title} añadido al carrito!`);
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const countElem = document.getElementById('cart-count');
+      const itemsContainer = document.getElementById('cart-items');
+      const totalElem = document.getElementById('cart-total');
+
+      countElem.innerText = cart.length;
+
+      if (cart.length === 0) {
+        itemsContainer.innerHTML = '<p class="text-gray-400 text-xs text-center py-8">Tu carrito está vacío <br>¡Agrega tu fruta o vaso preferido!</p>';
+        totalElem.innerText = '0 Bs';
+        return;
+      }
+
+      let html = '';
+      let total = 0;
+      cart.forEach((item, index) => {
+        total += item.price;
+        html += `
+      <div class="flex justify-between items-center bg-amber-50/60 p-3 rounded-2xl border border-amber-100">
+        <div>
+          <p class="font-display font-bold text-xs text-chamoy-950">${item.title}</p>
+          <span class="text-xs font-black text-chamoy-700">${item.price} Bs</span>
+        </div>
+        <button onclick="removeFromCart(${index})" class="text-gray-400 hover:text-chamoy-600 p-1">
+          <i class="fas fa-trash text-xs"></i>
+        </button>
+      </div>
+    `;
+      });
+      itemsContainer.innerHTML = html;
+      totalElem.innerText = `${total} Bs`;
+    }
+
+    function toggleCartModal() {
+      const cartModal = document.getElementById('cart-modal');
+      cartModal.classList.toggle('hidden');
+      cartModal.classList.toggle('flex');
+    }
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+
+    
+    function filterMenu(category) {
+      const items = document.querySelectorAll('.menu-item');
+      const buttons = document.querySelectorAll('.filter-btn');
+
+      buttons.forEach(btn => {
+        btn.classList.remove('bg-chamoy-900', 'text-white');
+        btn.classList.add('bg-white', 'text-chamoy-950');
+      });
+
+      event.currentTarget.classList.remove('bg-white', 'text-chamoy-950');
+      event.currentTarget.classList.add('bg-chamoy-900', 'text-white');
+
+      items.forEach(item => {
+        if (category === 'all' || item.classList.contains(category)) {
+          item.style.display = 'flex';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    
+    function checkoutWhatsApp() {
+      if (cart.length === 0) {
+        showToast('Tu carrito está vacío');
+        return;
+      }
+
+      let phone = "59162198947";
+      let message = "Hola Picadely! Me gustaría realizar el siguiente pedido:\n\n";
+      let total = 0;
+
+      cart.forEach((item, i) => {
+        message += `${i + 1}. *${item.title}* - ${item.price} Bs\n`;
+        total += item.price;
+      });
+
+      message += `\n*Total Estimado:* ${total} Bs\n\n¿Me ayudan a confirmar el tiempo de envío?`;
+
+      const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+    }
+
+    
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toast-message');
+      toastMessage.innerText = message;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2500);
+    }
+
+   
+
+    function renderReviews() {
+      const listContainer = document.getElementById('reviews-list');
+      listContainer.innerHTML = '';
+
+      let filtered = reviewsData.filter(r => {
+        if (currentStarFilter === 'all') return true;
+        return r.rating === parseInt(currentStarFilter);
+      });
+
+      if (filtered.length === 0) {
+        listContainer.innerHTML = '<p class="text-center text-xs text-gray-400 py-6">No hay reseñas con esta calificación aún.</p>';
+        return;
+      }
+
+      filtered.forEach(rev => {
+        let starsHtml = '';
+        for (let i = 1; i <= 5; i++) {
+          if (i <= rev.rating) {
+            starsHtml += '<i class="fas fa-star text-mango-500"></i>';
+          } else {
+            starsHtml += '<i class="far fa-star text-gray-300"></i>';
+          }
+        }
+
+        const itemCard = document.createElement('div');
+        itemCard.className = 'bg-white p-6 sm:p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition';
+        itemCard.innerHTML = `
+      <div class="flex justify-between items-start mb-3">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 bg-chamoy-900 text-mango-400 font-display font-black rounded-full flex items-center justify-center text-sm shadow-sm">
+            ${rev.name.charAt(0)}
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <h4 class="font-display font-bold text-sm text-chamoy-950">${rev.name}</h4>
+              ${rev.verified ? '<span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1"><i class="fas fa-check-circle"></i> Comprador</span>' : ''}
+            </div>
+            <p class="text-[10px] text-gray-400">${rev.date}</p>
+          </div>
+        </div>
+        <div class="flex text-xs space-x-1">${starsHtml}</div>
+      </div>
+      <h5 class="font-display font-bold text-sm text-gray-900 mb-1">${rev.title}</h5>
+      <p class="text-xs text-gray-600 leading-relaxed mb-4">${rev.comment}</p>
+      <div class="flex justify-between items-center pt-3 border-t border-gray-50 text-[11px]">
+        <span class="text-gray-400"><i class="fas fa-thumbs-up text-mango-500 mr-1"></i> Recomienda este local</span>
+        <button onclick="likeReview(${rev.id}, this)" class="text-gray-500 hover:text-chamoy-600 font-semibold flex items-center gap-1 transition">
+          <i class="far fa-thumbs-up"></i>
+          <span>¿Útil? (${rev.likes})</span>
+        </button>
+      </div>
+    `;
+        listContainer.appendChild(itemCard);
+      });
+
+      updateReviewSummaryStats();
+    }
+
+    function updateReviewSummaryStats() {
+      if (reviewsData.length === 0) return;
+      const total = reviewsData.length;
+      const sum = reviewsData.reduce((acc, r) => acc + r.rating, 0);
+      const avg = (sum / total).toFixed(1);
+
+      document.getElementById('summary-avg-score').innerText = avg;
+      document.getElementById('summary-total-count').innerText = `Basado en ${total} valoraciones`;
+
+      for (let i = 1; i <= 5; i++) {
+        const count = reviewsData.filter(r => r.rating === i).length;
+        const pct = Math.round((count / total) * 100);
+        document.getElementById(`bar-${i}`).style.width = `${pct}%`;
+        document.getElementById(`count-${i}`).innerText = `${pct}%`;
+      }
+    }
+
+    function filterReviewsByStars(stars) {
+      currentStarFilter = stars;
+      document.querySelectorAll('.rev-filter-btn').forEach(btn => {
+        btn.classList.remove('bg-chamoy-950', 'text-white');
+        btn.classList.add('bg-amber-50', 'text-gray-700');
+      });
+      event.currentTarget.classList.remove('bg-amber-50', 'text-gray-700');
+      event.currentTarget.classList.add('bg-chamoy-950', 'text-white');
+      renderReviews();
+    }
+
+    function sortReviews(criteria) {
+      if (criteria === 'highest') {
+        reviewsData.sort((a, b) => b.rating - a.rating);
+      } else if (criteria === 'lowest') {
+        reviewsData.sort((a, b) => a.rating - b.rating);
+      } else {
+        reviewsData.sort((a, b) => b.id - a.id);
+      }
+      renderReviews();
+    }
+
+    function likeReview(id, btn) {
+      const rev = reviewsData.find(r => r.id === id);
+      if (rev) {
+        rev.likes += 1;
+        btn.innerHTML = `<i class="fas fa-thumbs-up text-chamoy-600"></i> <span class="text-chamoy-600 font-bold">¡Gracias! (${rev.likes})</span>`;
+        btn.disabled = true;
+      }
+    }
+
+    function toggleReviewModal() {
+      const modal = document.getElementById('review-modal');
+      modal.classList.toggle('hidden');
+      modal.classList.toggle('flex');
+    }
+
+    function setFormRating(stars) {
+      selectedFormRating = stars;
+      updateFormStarsUI(stars);
+    }
+
+    function hoverFormRating(stars) {
+      updateFormStarsUI(stars);
+    }
+
+    function resetFormRatingHover() {
+      updateFormStarsUI(selectedFormRating);
+    }
+
+    function updateFormStarsUI(stars) {
+      const container = document.getElementById('modal-star-rating');
+      const icons = container.querySelectorAll('i');
+      const labels = {
+        1: 'Pésimo (1/5)',
+        2: 'Malo (2/5)',
+        3: 'Aceptable (3/5)',
+        4: 'Bueno (4/5)',
+        5: '¡Excelente! (5/5)'
+      };
+
+      icons.forEach((icon, idx) => {
+        if (idx < stars) {
+          icon.className = 'fas fa-star text-mango-500 transition';
+        } else {
+          icon.className = 'far fa-star text-amber-300 transition';
+        }
+      });
+
+      document.getElementById('rating-feedback-text').innerText = labels[stars];
+    }
+
+    function submitReview(event) {
+      event.preventDefault();
+      const name = document.getElementById('rev-name').value;
+      const email = document.getElementById('rev-email').value;
+      const title = document.getElementById('rev-title').value;
+      const comment = document.getElementById('rev-comment').value;
+      const recommend = document.getElementById('rev-recommend').checked;
+
+      const newReview = {
+        id: Date.now(),
+        name: name,
+        date: 'Hace un momento',
+        rating: selectedFormRating,
+        title: title,
+        comment: comment,
+        likes: 0,
+        verified: true,
+        recommend: recommend
+      };
+
+      reviewsData.unshift(newReview);
+      renderReviews();
+      toggleReviewModal();
+      document.getElementById('review-form').reset();
+      setFormRating(5);
+      showToast('¡Reseña publicada con éxito!');
+    }
+  </script>
+</body>
+
+</html>
